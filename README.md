@@ -12,6 +12,7 @@ The plan is to make it work for renju and gomoku games, as well as with any othe
     game.moveTo('H8');
     game.moveTo('H9');
     game.moveTo('I8');
+    game.moveTo('A1','B1');
     
     console.log(game.ascii());
    /**
@@ -30,9 +31,11 @@ The plan is to make it work for renju and gomoku games, as well as with any othe
     4                                               
     3                                               
     2                                               
-    1      
+    1   o  x                                         
     */
-
+    
+    
+    console.log(game.nextMove()); // 'o'
     
 
 ```

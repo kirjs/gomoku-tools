@@ -1,7 +1,7 @@
 var _ = require('lodash');
 var ascii = require('./tools/asciiBoard');
 var strategies = require('./strategies');
-
+var transforms = require('./tools/transforms');
 
 var emptyPosition = function (x, y) {
     x = x || defaults.cellsX;
@@ -42,7 +42,16 @@ Game.prototype = {
     },
     ascii: function () {
         return ascii(this.getPosition());
+    },
+    transform: {
+        horizontal: transforms.horizontal,
+        vertical: transforms.vertical,
+        clockwise: transforms.clockwise,
+        counterClockwise: transforms.counterClockwise,
+        diagonalFromLeftTopToRightBottom: transforms.diagonalFromLeftTopToRightBottom,
+        diagonalFromRightTopToLeftBottom: transforms.diagonalFromRightTopToLeftBottom
     }
+
 };
 
 
