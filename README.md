@@ -35,7 +35,7 @@ The plan is to make it work for renju and gomoku games, as well as with any othe
 
     
 
-'''
+```
 
 ## Tests
 Run tests: `nmp test`
