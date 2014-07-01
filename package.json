@@ -1,0 +1,27 @@
+{
+  "name": "gomoku-tools",
+  "version": "0.0.0",
+  "description": "Tools for handling gomoku games",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/nodeunit test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kirjs/gomoku-tools.git"
+  },
+  "keywords": [
+    "gomoku",
+    "renju",
+    "board"
+  ],
+  "author": "Kirill Cherkashin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kirjs/gomoku-tools/issues"
+  },
+  "dependencies": {
+    "lodash": "~2.4.1",
+    "require-directory": "~1.2.0"
+  }
+}
