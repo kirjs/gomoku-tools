@@ -23,5 +23,8 @@
   "dependencies": {
     "lodash": "~2.4.1",
     "require-directory": "~1.2.0"
+  },
+  "devDependencies": {
+    "nodeunit": "~0.9.0"
   }
 }
