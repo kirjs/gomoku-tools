@@ -1,6 +1,6 @@
 var Game = require('../../src/index.js');
 var transform = require('../../src/tools/transforms');
-var utils = require('../../src/tools/utils');
+
 exports.setUp = function (done) {
     this.game = new Game({
         strategy: 'ticTacToe'

@@ -5,9 +5,7 @@ var transforms = require('./tools/transforms');
 var utils = require('./tools/utils');
 
 var emptyPosition = function (x, y) {
-    x = x || defaults.cellsX;
-    y = y || defaults.cellsY;
-    return _.range(y).map(_.range.bind(null, 0, x, 0))
+    return _.range(y).map(_.range.bind(null, 0, x, 0));
 };
 
 defaults = {
