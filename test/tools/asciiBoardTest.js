@@ -1,4 +1,4 @@
-var Game = require('../../src/index.js').Game;
+var Game = require('../../src/index.js');
 var asciiBoard = require('../../src/tools/asciiBoard.js');
 
 exports.testAsciiGomokuBoard = function (test) {
@@ -41,8 +41,9 @@ exports.testAsciiTicTacToeBoard = function (test) {
       + ' 3   x       \n'
       + ' 2      x    \n'
       + ' 1   o       \n';
-    console.log(asciiBoard(game.getPosition()));
+
 
     test.equals(pos, asciiBoard(game.getPosition()));
+    test.equals(pos, game.ascii());
     test.done();
 };

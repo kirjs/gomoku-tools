@@ -1,5 +1,5 @@
-var Game = require('../src/index.js').Game;
-var moves = ["h8", "g7", "j8", "g9", "g8", "f8", "h10", "e9", "h6", "d10", "c11", "f9", "h9"];
+var Game = require('../src/index.js');
+var utils = require('../src/tools/utils.js');
 
 exports.testAddingMoves = function (test) {
     var game = new Game({
@@ -68,4 +68,20 @@ exports.testAddingMultipleMoves = function (test) {
         [2, 1, 2]
     ]);
     test.done();
+};
+
+exports.testMutatingPositionDoesNotAffectTheGame = function (test) {
+    var game = new Game({
+        strategy: 'ticTacToe'
+    });
+    game.moveTo('b2', 'a1', 'a3', 'c1', 'b1');
+    var original = utils.clonePosition(game.getPosition());
+    var position = game.getPosition();
+    position[0][0] = 9;
+    position[0][1] = 9;
+    position[2][0] = 9;
+    position[1][2] = 9;
+    test.deepEqual(original, game.getPosition());
+    test.done();
+
 };

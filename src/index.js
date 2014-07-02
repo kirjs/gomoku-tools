@@ -2,6 +2,7 @@ var _ = require('lodash');
 var ascii = require('./tools/asciiBoard');
 var strategies = require('./strategies');
 var transforms = require('./tools/transforms');
+var utils = require('./tools/utils');
 
 var emptyPosition = function (x, y) {
     x = x || defaults.cellsX;
@@ -23,7 +24,7 @@ function Game(config) {
 }
 Game.prototype = {
     getPosition: function () {
-        return this.position;
+        return utils.clonePosition(this.position);
     },
 
     moveTo: function () {
@@ -55,4 +56,4 @@ Game.prototype = {
 };
 
 
-exports.Game = Game;
+module.exports = Game;

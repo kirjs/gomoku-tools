@@ -1,6 +1,6 @@
 var normalize = require('../../src/tools/normalize.js');
 var transforms = require('../../src/tools/transforms.js');
-var Game = require('../../src/index.js').Game;
+var Game = require('../../src/index.js');
 
 exports.testBasic = function (test) {
     this.game = new Game({

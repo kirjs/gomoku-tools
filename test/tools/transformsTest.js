@@ -1,4 +1,4 @@
-var Game = require('../../src/index.js').Game;
+var Game = require('../../src/index.js');
 var transform = require('../../src/tools/transforms');
 var utils = require('../../src/tools/utils');
 exports.setUp = function (done) {
@@ -14,11 +14,7 @@ exports.testRotateHorizontal = function (test) {
         [0, 1, 0],
         [2, 1, 2]
     ];
-    var position = this.game.getPosition();
-    console.log(position);
-
     test.deepEqual(transform.horizontal(this.game.getPosition()), original);
-    console.log(position);
     test.done();
 };
 exports.testRotateHorizontalDoesNotMutateTheOriginal = function (test) {

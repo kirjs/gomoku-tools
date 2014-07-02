@@ -1,5 +1,4 @@
-var Game = require('../src/index.js').Game;
-var moves = ["h8", "g7", "j8", "g9", "g8", "f8", "h10", "e9", "h6", "d10", "c11", "f9", "h9"];
+var Game = require('../src/index.js');
 
 exports.testGomokuGame = function (test) {
     var game = new Game();
