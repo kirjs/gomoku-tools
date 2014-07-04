@@ -8,7 +8,7 @@ var emptyPosition = function (x, y) {
     return _.range(y).map(_.range.bind(null, 0, x, 0));
 };
 
-defaults = {
+var defaults = {
     strategy: 'gomoku'
 };
 
