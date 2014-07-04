@@ -13,18 +13,17 @@ var defaults = {
 };
 
 function Game(config) {
-    config = _.defaults({}, config, defaults);
-    this.strategy = new strategies[config.strategy](config);
+    this.config = _.defaults({}, config, defaults);
+    this.strategy = new strategies[this.config.strategy](this.config);
     this.moves = [];
     this.position = emptyPosition(this.strategy.config.cellsX, this.strategy.config.cellsY);
     this.move = 1;
-
 }
 Game.prototype = {
     getPosition: function () {
         return utils.clonePosition(this.position);
     },
-    setPosition: function ( position ) {
+    setPosition: function (position) {
         this.position = utils.clonePosition(position);
     },
     moveTo: function () {
@@ -52,7 +51,14 @@ Game.prototype = {
         counterClockwise: transforms.counterClockwise,
         diagonalFromLeftTopToRightBottom: transforms.diagonalFromLeftTopToRightBottom,
         diagonalFromRightTopToLeftBottom: transforms.diagonalFromRightTopToLeftBottom
+    },
+
+    clone: function () {
+        var result = new Game(this.config);
+        result.setPosition(this.position);
+        return result;
     }
+
 
 };
 

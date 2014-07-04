@@ -95,3 +95,13 @@ exports.testSetPosition = function (test) {
     test.deepEqual(position, game.getPosition());
     test.done();
 };
+
+exports.cloningAGame = function (test) {
+    var game = new Game({
+        strategy: 'ticTacToe'
+    });
+    game.moveTo('b2', 'a1', 'a3', 'c1', 'b1');
+    var cloned = game.clone();
+    test.deepEqual(game.getPosition(), cloned.getPosition());
+    test.done();
+};
