@@ -2,7 +2,7 @@
     "name": "gomoku-tools",
     "version": "0.0.4",
     "description": "Tools for handling gomoku games",
-    "main": "src/index.js",
+    "main": "index.js",
     "scripts": {
         "test": "./node_modules/.bin/nodeunit test"
     },
