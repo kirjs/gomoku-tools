@@ -24,7 +24,9 @@ Game.prototype = {
     getPosition: function () {
         return utils.clonePosition(this.position);
     },
-
+    setPosition: function ( position ) {
+        this.position = utils.clonePosition(position);
+    },
     moveTo: function () {
         _.map(arguments, function (cell) {
             this.moves.push(cell);
@@ -42,6 +44,7 @@ Game.prototype = {
     ascii: function () {
         return ascii(this.getPosition());
     },
+
     transform: {
         horizontal: transforms.horizontal,
         vertical: transforms.vertical,

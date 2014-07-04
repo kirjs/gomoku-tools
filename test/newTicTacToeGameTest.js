@@ -85,3 +85,13 @@ exports.testMutatingPositionDoesNotAffectTheGame = function (test) {
     test.done();
 
 };
+
+exports.testSetPosition = function (test) {
+    var position = (new Game({strategy: 'ticTacToe'})).moveTo('b2', 'a1', 'a3', 'c1', 'b1').getPosition();
+    var game = new Game({
+        strategy: 'ticTacToe'
+    });
+    game.setPosition(position);
+    test.deepEqual(position, game.getPosition());
+    test.done();
+};
