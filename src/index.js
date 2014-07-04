@@ -2,6 +2,7 @@ var _ = require('lodash');
 var ascii = require('./tools/asciiBoard');
 var strategies = require('./strategies');
 var transforms = require('./tools/transforms');
+var normalize = require('./tools/normalize');
 var utils = require('./tools/utils');
 
 var emptyPosition = function (x, y) {
@@ -18,6 +19,7 @@ function Game(config) {
     this.moves = [];
     this.position = emptyPosition(this.strategy.config.cellsX, this.strategy.config.cellsY);
     this.move = 1;
+    this.applyFunctions();
 }
 Game.prototype = {
     getPosition: function () {
@@ -43,14 +45,31 @@ Game.prototype = {
     ascii: function () {
         return ascii(this.getPosition());
     },
+    /**
+     * TODO:
+     * Here I am trying to expose transform api my map each transform function
+     * to work with the actual game object position
+     *
+     * I am looking for a better way to do that, as creating a multiple functions for every game instance
+     * seems to be pretty expensive
+     */
+    applyFunctions: function () {
 
-    transform: {
-        horizontal: transforms.horizontal,
-        vertical: transforms.vertical,
-        clockwise: transforms.clockwise,
-        counterClockwise: transforms.counterClockwise,
-        diagonalFromLeftTopToRightBottom: transforms.diagonalFromLeftTopToRightBottom,
-        diagonalFromRightTopToLeftBottom: transforms.diagonalFromRightTopToLeftBottom
+        var applyPositionTransform = function (transform) {
+            return function () {
+                this.position = transform(this.position);
+            }.bind(this);
+        }.bind(this);
+
+        this.transform = {
+            horizontal: applyPositionTransform(transforms.horizontal),
+            vertical: applyPositionTransform(transforms.vertical),
+            clockwise: applyPositionTransform(transforms.clockwise),
+            counterClockwise: applyPositionTransform(transforms.counterClockwise),
+            diagonalFromLeftTopToRightBottom: applyPositionTransform(transforms.diagonalFromLeftTopToRightBottom),
+            diagonalFromRightTopToLeftBottom: applyPositionTransform(transforms.diagonalFromRightTopToLeftBottom),
+            normalizeBasic: applyPositionTransform(normalize.basic)
+        };
     },
 
     clone: function () {
@@ -60,7 +79,8 @@ Game.prototype = {
     }
 
 
-};
+}
+;
 
 
 module.exports = Game;
