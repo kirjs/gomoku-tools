@@ -1,0 +1,20 @@
+{
+    "name": "gomoku-tools",
+    "main": "src/gomoku-tools.js",
+    "version": "0.0.6",
+    "homepage": "https://github.com/kirjs/gomoku-tools",
+    "authors": [
+        "Kirill Cherkashin <kirill@kcherkashin.org>"
+    ],
+    "description": "Tools that simplify common operations with gomoku games and positions",
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "app/bower_components",
+        "test",
+        "reference",
+        "src"
+    ]
+}
