@@ -366,19 +366,40 @@ Game.prototype = {
      */
     moveTo: function () {
         Array.prototype.map.call(arguments, function (cell) {
-            this.history.push(cell);
             if (typeof cell === 'string') {
                 cell = this.strategy.fromXY(cell);
             }
-            this.position[cell[0]][cell[1]] = this.getNextMove();
+            this.history.push(cell);
+            this.updateCell(cell[0], cell[1], this.getNextMove());
         }, this);
         return this;
     },
 
+
+    back: function () {
+        this.getPreviousMove();
+        var cell = this.history.pop();
+        this.updateCell(cell[0], cell[1], 0);
+    },
+    updateCell: function (x, y, value) {
+        this.position[x][y] = value;
+    },
+
+    /**
+     * This function is meant to calculate the color of the next stone.
+     * For now we are using a simple mechanism that swaps the stone every time.
+     *
+     * May have to be rewritten once we want to support more advanced games like connect 6
+     *
+     * @returns {number|Game.move|*}
+     */
     getNextMove: function () {
         var result = this.move;
         this.move = this.move === 1 ? 2 : 1;
         return result;
+    },
+    getPreviousMove: function () {
+        return this.getNextMove();
     },
     ascii: function () {
         return ascii(this.getPosition());

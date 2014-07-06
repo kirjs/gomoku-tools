@@ -107,7 +107,7 @@ exports.cloningAGame = function (test) {
 };
 
 
-exports.goingBack = function (test) {
+exports.testGoingBackwards = function (test) {
     var game = new Game({
         strategy: 'ticTacToe'
     });
@@ -127,6 +127,14 @@ exports.goingBack = function (test) {
         [0, 1, 0],
         [0, 0, 0]
     ]);
+    game.back();
+
+    test.deepEqual(game.getPosition(), [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0]
+    ]);
+
     game.back();
 
     test.deepEqual(game.getPosition(), [

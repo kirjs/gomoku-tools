@@ -49,10 +49,13 @@ Game.prototype = {
 
 
     back: function () {
-        this.getPreviousMove();
-        var cell = this.history.pop();
-        this.updateCell(cell[0], cell[1], 0);
+        if (this.history.length) {
+            this.getPreviousMove();
+            var cell = this.history.pop();
+            this.updateCell(cell[0], cell[1], 0);
+        }
     },
+
     updateCell: function (x, y, value) {
         this.position[x][y] = value;
     },
