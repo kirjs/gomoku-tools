@@ -347,6 +347,7 @@ function Game(config) {
     this.strategy = new strategies[config.strategy](config);
     this.config = this.strategy.config;
     this.history = [];
+    this.undoHistory = [];
     this.position = emptyPosition(this.strategy.config.cellsX, this.strategy.config.cellsY);
     this.move = 1;
     this.applyFunctions();
@@ -375,12 +376,20 @@ Game.prototype = {
         return this;
     },
 
-
-    back: function () {
-        this.getPreviousMove();
-        var cell = this.history.pop();
-        this.updateCell(cell[0], cell[1], 0);
+    forward: function () {
+        if (this.undoHistory.length) {
+            this.moveTo(this.undoHistory.pop());
+        }
     },
+    back: function () {
+        if (this.history.length) {
+            this.getPreviousMove();
+            var cell = this.history.pop();
+            this.undoHistory.push(cell);
+            this.updateCell(cell[0], cell[1], 0);
+        }
+    },
+
     updateCell: function (x, y, value) {
         this.position[x][y] = value;
     },
