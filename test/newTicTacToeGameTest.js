@@ -181,3 +181,21 @@ exports.testGoingForward = function (test) {
     test.done();
 };
 
+exports.testMakingAMoveShouldClearUndoHistory = function (test) {
+    var game = new Game({
+        strategy: 'ticTacToe'
+    });
+    game.moveTo('b2');
+    game.moveTo('a1');
+    game.back();
+    game.moveTo('a2');
+    game.forward();
+    test.deepEqual(game.getPosition(), [
+        [0, 0, 0],
+        [2, 1, 0],
+        [0, 0, 0]
+    ]);
+
+    test.done();
+};
+
