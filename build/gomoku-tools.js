@@ -343,8 +343,9 @@ var defaults = {
 };
 
 function Game(config) {
-    this.config = _defaults({}, config, defaults);
-    this.strategy = new strategies[this.config.strategy](this.config);
+    config = _defaults({}, config, defaults);
+    this.strategy = new strategies[config.strategy](config);
+    this.config = this.strategy.config;
     this.moves = [];
     this.position = emptyPosition(this.strategy.config.cellsX, this.strategy.config.cellsY);
     this.move = 1;
@@ -357,11 +358,19 @@ Game.prototype = {
     setPosition: function (position) {
         this.position = utils.clonePosition(position);
     },
+    /**
+     * Takes one or multiple board cells.
+     * Each of them can be represented as a string, e.g. 'h8', or as an array with x and y, e.g. [7,7]
+     *
+     * @returns {Game} for chaining
+     */
     moveTo: function () {
         Array.prototype.map.call(arguments, function (cell) {
             this.moves.push(cell);
-            var pos = this.strategy.fromXY(cell);
-            this.position[pos[0]][pos[1]] = this.getNextMove();
+            if (typeof cell === 'string') {
+                cell = this.strategy.fromXY(cell);
+            }
+            this.position[cell[0]][cell[1]] = this.getNextMove();
         }, this);
         return this;
     },
@@ -408,8 +417,7 @@ Game.prototype = {
     }
 
 
-}
-;
+};
 
 
 module.exports = Game;
