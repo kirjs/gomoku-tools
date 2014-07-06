@@ -366,6 +366,7 @@ Game.prototype = {
      * @returns {Game} for chaining
      */
     moveTo: function () {
+        this.undoHistory = [];
         Array.prototype.map.call(arguments, function (cell) {
             if (typeof cell === 'string') {
                 cell = this.strategy.fromXY(cell);
@@ -376,9 +377,12 @@ Game.prototype = {
         return this;
     },
 
+
     forward: function () {
         if (this.undoHistory.length) {
-            this.moveTo(this.undoHistory.pop());
+            var cell = this.undoHistory.pop();
+            this.history.push(cell);
+            this.updateCell(cell[0], cell[1], this.getNextMove());
         }
     },
     back: function () {
