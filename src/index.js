@@ -1,12 +1,13 @@
-var _ = require('lodash');
 var ascii = require('./tools/asciiBoard');
 var strategies = require('./strategies');
 var transforms = require('./tools/transforms');
 var normalize = require('./tools/normalize');
 var utils = require('./tools/utils');
+var _defaults = require('lodash.defaults');
+var _range = require('lodash.range');
 
 var emptyPosition = function (x, y) {
-    return _.range(y).map(_.range.bind(null, 0, x, 0));
+    return _range(y).map(_range.bind(null, 0, x, 0));
 };
 
 var defaults = {
@@ -14,7 +15,7 @@ var defaults = {
 };
 
 function Game(config) {
-    this.config = _.defaults({}, config, defaults);
+    this.config = _defaults({}, config, defaults);
     this.strategy = new strategies[this.config.strategy](this.config);
     this.moves = [];
     this.position = emptyPosition(this.strategy.config.cellsX, this.strategy.config.cellsY);
@@ -29,7 +30,7 @@ Game.prototype = {
         this.position = utils.clonePosition(position);
     },
     moveTo: function () {
-        _.map(arguments, function (cell) {
+        Array.prototype.map.call(arguments, function (cell) {
             this.moves.push(cell);
             var pos = this.strategy.fromXY(cell);
             this.position[pos[0]][pos[1]] = this.getNextMove();

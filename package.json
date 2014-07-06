@@ -1,37 +1,39 @@
 {
-    "name": "gomoku-tools",
-    "version": "0.0.13",
-    "description": "Tools for handling gomoku games",
-    "main": "index.js",
-    "scripts": {
-        "test": "./node_modules/.bin/nodeunit test"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/kirjs/gomoku-tools.git"
-    },
-    "keywords": [
-        "gomoku",
-        "renju",
-        "board",
-        "five in a row"
-    ],
-    "author": "Kirill Cherkashin",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/kirjs/gomoku-tools/issues"
-    },
-    "dependencies": {
-        "lodash": "~2.4.1"
-    },
-    "devDependencies": {
-        "nodeunit": "~0.9.0",
-        "gulp": "~3.8.5",
-        "gulp-browserify": "~0.5.0",
-        "gulp-uglify": "~0.3.1",
-        "gulp-rename": "~1.2.0",
-        "gulp-rimraf": "~0.1.0",
-        "gulp-bump": "~0.1.10",
-        "gulp-git": "~0.4.3"
-    }
+  "name": "gomoku-tools",
+  "version": "0.0.13",
+  "description": "Tools for handling gomoku games",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/nodeunit test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kirjs/gomoku-tools.git"
+  },
+  "keywords": [
+    "gomoku",
+    "renju",
+    "board",
+    "five in a row"
+  ],
+  "author": "Kirill Cherkashin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kirjs/gomoku-tools/issues"
+  },
+  "dependencies": {
+    "lodash": "~2.4.1",
+    "lodash.defaults": "~2.4.1",
+    "lodash.range": "~2.4.1"
+  },
+  "devDependencies": {
+    "nodeunit": "~0.9.0",
+    "gulp": "~3.8.5",
+    "gulp-browserify": "~0.5.0",
+    "gulp-uglify": "~0.3.1",
+    "gulp-rename": "~1.2.0",
+    "gulp-rimraf": "~0.1.0",
+    "gulp-bump": "~0.1.10",
+    "gulp-git": "~0.4.3"
+  }
 }

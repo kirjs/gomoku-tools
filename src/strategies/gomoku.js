@@ -1,8 +1,8 @@
 var Mnk = require('./mnk');
-var _ = require('lodash');
+var _defaults = require('lodash.defaults');
 
 function Gomoku(config) {
-    this.config = _.defaults({}, config, this.defaults);
+    this.config = _defaults({}, config, this.defaults);
 
 }
 Gomoku.prototype = new Mnk();
