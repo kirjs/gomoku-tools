@@ -346,7 +346,7 @@ function Game(config) {
     config = _defaults({}, config, defaults);
     this.strategy = new strategies[config.strategy](config);
     this.config = this.strategy.config;
-    this.moves = [];
+    this.history = [];
     this.position = emptyPosition(this.strategy.config.cellsX, this.strategy.config.cellsY);
     this.move = 1;
     this.applyFunctions();
@@ -366,7 +366,7 @@ Game.prototype = {
      */
     moveTo: function () {
         Array.prototype.map.call(arguments, function (cell) {
-            this.moves.push(cell);
+            this.history.push(cell);
             if (typeof cell === 'string') {
                 cell = this.strategy.fromXY(cell);
             }

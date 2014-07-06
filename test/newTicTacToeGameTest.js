@@ -12,7 +12,7 @@ exports.testAddingMoves = function (test) {
         [0, 0, 0]
     ]);
 
-    game.moveTo([1,1]);
+    game.moveTo([1, 1]);
 
     test.deepEqual(game.getPosition(), [
         [0, 0, 0],
@@ -103,5 +103,37 @@ exports.cloningAGame = function (test) {
     game.moveTo('b2', 'a1', 'a3', 'c1', 'b1');
     var cloned = game.clone();
     test.deepEqual(game.getPosition(), cloned.getPosition());
+    test.done();
+};
+
+
+exports.goingBack = function (test) {
+    var game = new Game({
+        strategy: 'ticTacToe'
+    });
+    game.moveTo('b2');
+    game.moveTo('a1');
+
+    test.deepEqual(game.getPosition(), [
+        [0, 0, 0],
+        [0, 1, 0],
+        [2, 0, 0]
+    ]);
+
+    game.back();
+
+    test.deepEqual(game.getPosition(), [
+        [0, 0, 0],
+        [0, 1, 0],
+        [0, 0, 0]
+    ]);
+    game.back();
+
+    test.deepEqual(game.getPosition(), [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0]
+    ]);
+
     test.done();
 };
