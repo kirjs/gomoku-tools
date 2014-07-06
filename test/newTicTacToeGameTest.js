@@ -145,3 +145,39 @@ exports.testGoingBackwards = function (test) {
 
     test.done();
 };
+
+exports.testGoingForward = function (test) {
+    var game = new Game({
+        strategy: 'ticTacToe'
+    });
+    game.moveTo('b2');
+    game.moveTo('a1');
+    game.back();
+    game.back();
+    game.back();
+    game.forward();
+
+    test.deepEqual(game.getPosition(), [
+        [0, 0, 0],
+        [0, 1, 0],
+        [0, 0, 0]
+    ]);
+
+    game.forward();
+
+    test.deepEqual(game.getPosition(), [
+        [0, 0, 0],
+        [0, 1, 0],
+        [2, 0, 0]
+    ]);
+    game.forward();
+
+    test.deepEqual(game.getPosition(), [
+        [0, 0, 0],
+        [0, 1, 0],
+        [2, 0, 0]
+    ]);
+
+    test.done();
+};
+
