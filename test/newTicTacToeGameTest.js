@@ -12,7 +12,7 @@ exports.testAddingMoves = function (test) {
         [0, 0, 0]
     ]);
 
-    game.moveTo('b2');
+    game.moveTo([1,1]);
 
     test.deepEqual(game.getPosition(), [
         [0, 0, 0],
