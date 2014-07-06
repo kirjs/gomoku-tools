@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+!function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var o;"undefined"!=typeof window?o=window:"undefined"!=typeof global?o=global:"undefined"!=typeof self&&(o=self),o.gomokuTools=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="npm" -o ./npm/`
@@ -7,8 +7,8 @@
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-var keys = require('lodash.keys'),
-    objectTypes = require('lodash._objecttypes');
+var keys = _dereq_('lodash.keys'),
+    objectTypes = _dereq_('lodash._objecttypes');
 
 /**
  * Assigns own enumerable properties of source object(s) to the destination
@@ -54,7 +54,7 @@ var defaults = function(object, source, guard) {
 
 module.exports = defaults;
 
-},{"lodash._objecttypes":2,"lodash.keys":3}],2:[function(require,module,exports){
+},{"lodash._objecttypes":2,"lodash.keys":3}],2:[function(_dereq_,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="npm" -o ./npm/`
@@ -76,7 +76,7 @@ var objectTypes = {
 
 module.exports = objectTypes;
 
-},{}],3:[function(require,module,exports){
+},{}],3:[function(_dereq_,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="npm" -o ./npm/`
@@ -85,9 +85,9 @@ module.exports = objectTypes;
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-var isNative = require('lodash._isnative'),
-    isObject = require('lodash.isobject'),
-    shimKeys = require('lodash._shimkeys');
+var isNative = _dereq_('lodash._isnative'),
+    isObject = _dereq_('lodash.isobject'),
+    shimKeys = _dereq_('lodash._shimkeys');
 
 /* Native method shortcuts for methods with the same name as other `lodash` methods */
 var nativeKeys = isNative(nativeKeys = Object.keys) && nativeKeys;
@@ -114,7 +114,7 @@ var keys = !nativeKeys ? shimKeys : function(object) {
 
 module.exports = keys;
 
-},{"lodash._isnative":4,"lodash._shimkeys":5,"lodash.isobject":6}],4:[function(require,module,exports){
+},{"lodash._isnative":4,"lodash._shimkeys":5,"lodash.isobject":6}],4:[function(_dereq_,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="npm" -o ./npm/`
@@ -150,7 +150,7 @@ function isNative(value) {
 
 module.exports = isNative;
 
-},{}],5:[function(require,module,exports){
+},{}],5:[function(_dereq_,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="npm" -o ./npm/`
@@ -159,7 +159,7 @@ module.exports = isNative;
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-var objectTypes = require('lodash._objecttypes');
+var objectTypes = _dereq_('lodash._objecttypes');
 
 /** Used for native method references */
 var objectProto = Object.prototype;
@@ -190,7 +190,7 @@ var shimKeys = function(object) {
 
 module.exports = shimKeys;
 
-},{"lodash._objecttypes":2}],6:[function(require,module,exports){
+},{"lodash._objecttypes":2}],6:[function(_dereq_,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="npm" -o ./npm/`
@@ -199,7 +199,7 @@ module.exports = shimKeys;
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <http://lodash.com/license>
  */
-var objectTypes = require('lodash._objecttypes');
+var objectTypes = _dereq_('lodash._objecttypes');
 
 /**
  * Checks if `value` is the language type of Object.
@@ -231,7 +231,7 @@ function isObject(value) {
 
 module.exports = isObject;
 
-},{"lodash._objecttypes":2}],7:[function(require,module,exports){
+},{"lodash._objecttypes":2}],7:[function(_dereq_,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="npm" -o ./npm/`
@@ -302,14 +302,14 @@ function range(start, end, step) {
 
 module.exports = range;
 
-},{}],8:[function(require,module,exports){
-var ascii = require('./tools/asciiBoard');
-var strategies = require('./strategies');
-var transforms = require('./tools/transforms');
-var normalize = require('./tools/normalize');
-var utils = require('./tools/utils');
-var _defaults = require('lodash.defaults');
-var _range = require('lodash.range');
+},{}],8:[function(_dereq_,module,exports){
+var ascii = _dereq_('./tools/asciiBoard');
+var strategies = _dereq_('./strategies');
+var transforms = _dereq_('./tools/transforms');
+var normalize = _dereq_('./tools/normalize');
+var utils = _dereq_('./tools/utils');
+var _defaults = _dereq_('lodash.defaults');
+var _range = _dereq_('lodash.range');
 
 var emptyPosition = function (x, y) {
     return _range(y).map(_range.bind(null, 0, x, 0));
@@ -391,9 +391,9 @@ Game.prototype = {
 
 module.exports = Game;
 
-},{"./strategies":10,"./tools/asciiBoard":13,"./tools/normalize":14,"./tools/transforms":15,"./tools/utils":16,"lodash.defaults":1,"lodash.range":7}],9:[function(require,module,exports){
-var Mnk = require('./mnk');
-var _defaults = require('lodash.defaults');
+},{"./strategies":10,"./tools/asciiBoard":13,"./tools/normalize":14,"./tools/transforms":15,"./tools/utils":16,"lodash.defaults":1,"lodash.range":7}],9:[function(_dereq_,module,exports){
+var Mnk = _dereq_('./mnk');
+var _defaults = _dereq_('lodash.defaults');
 
 function Gomoku(config) {
     this.config = _defaults({}, config, this.defaults);
@@ -409,14 +409,14 @@ Gomoku.prototype.defaults = {
 module.exports = Gomoku;
 
 
-},{"./mnk":11,"lodash.defaults":1}],10:[function(require,module,exports){
+},{"./mnk":11,"lodash.defaults":1}],10:[function(_dereq_,module,exports){
 module.exports = {
-    gomoku: require('./gomoku'),
-    mnk: require('./mnk'),
-    ticTacToe: require('./ticTacToe')
+    gomoku: _dereq_('./gomoku'),
+    mnk: _dereq_('./mnk'),
+    ticTacToe: _dereq_('./ticTacToe')
 };
 
-},{"./gomoku":9,"./mnk":11,"./ticTacToe":12}],11:[function(require,module,exports){
+},{"./gomoku":9,"./mnk":11,"./ticTacToe":12}],11:[function(_dereq_,module,exports){
 function Mnk() {
 
 }
@@ -428,9 +428,9 @@ Mnk.prototype.fromXY = function (str) {
 };
 
 module.exports = Mnk;
-},{}],12:[function(require,module,exports){
-var Mnk = require('./mnk');
-var _defaults = require('lodash.defaults');
+},{}],12:[function(_dereq_,module,exports){
+var Mnk = _dereq_('./mnk');
+var _defaults = _dereq_('lodash.defaults');
 
 function TicTacToe(config) {
     this.config = _defaults({}, config, this.defaults);
@@ -446,7 +446,7 @@ TicTacToe.prototype.defaults = {
 
 module.exports = TicTacToe;
 
-},{"./mnk":11,"lodash.defaults":1}],13:[function(require,module,exports){
+},{"./mnk":11,"lodash.defaults":1}],13:[function(_dereq_,module,exports){
 function pad2(number) {
     return ( number > 9) ? number : (number + ' ');
 }
@@ -492,9 +492,9 @@ module.exports = function (position) {
     return result;
 };
 
-},{}],14:[function(require,module,exports){
-var transforms = require('./transforms');
-var utils = require('./utils');
+},{}],14:[function(_dereq_,module,exports){
+var transforms = _dereq_('./transforms');
+var utils = _dereq_('./utils');
 
 function basicCompare(a, b) {
     if (utils.stringify(a) > utils.stringify(b)) {
@@ -534,8 +534,8 @@ module.exports = {
     }
 };
 
-},{"./transforms":15,"./utils":16}],15:[function(require,module,exports){
-var utils = require('./utils');
+},{"./transforms":15,"./utils":16}],15:[function(_dereq_,module,exports){
+var utils = _dereq_('./utils');
 /**
  * This is a rather naive implementation of board mirroring flipping and rotations.
  *
@@ -634,7 +634,7 @@ module.exports = {
 
 };
 
-},{"./utils":16}],16:[function(require,module,exports){
+},{"./utils":16}],16:[function(_dereq_,module,exports){
 var rComma = /,/g;
 module.exports = {
     clonePosition: function (position) {
@@ -649,3 +649,5 @@ module.exports = {
 };
 
 },{}]},{},[8])
+(8)
+});
