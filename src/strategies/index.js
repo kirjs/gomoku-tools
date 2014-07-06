@@ -1,2 +1,5 @@
-var requireDirectory = require('require-directory');
-module.exports = requireDirectory(module);
+module.exports = {
+    gomoku: require('./gomoku'),
+    mnk: require('./mnk'),
+    ticTacToe: require('./ticTacToe')
+};
