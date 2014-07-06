@@ -16,7 +16,7 @@
         "test",
         "reference",
         "src",
-        "*.js",
+        "./*.js",
         "package.json"
     ]
 }
