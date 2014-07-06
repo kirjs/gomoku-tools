@@ -5,9 +5,7 @@ var rename = require('gulp-rename');
 var rimraf = require('gulp-rimraf');
 var bump = require('gulp-bump');
 var git = require('gulp-git');
-function log(e) {
-    console.log(e);
-}
+
 
 gulp.task('build', function () {
     gulp.src('src/index.js')
@@ -26,14 +24,17 @@ gulp.task('publish', function () {
         .pipe(git.commit('Add the latest built version'))
         .on('error', console.log)
         .pipe(git.push())
-
         .on('error', console.log);
 });
 
 gulp.task('bump', function () {
     gulp.src(['package.json', 'bower.json'])
         .pipe(bump())
-        .pipe(gulp.dest('./'));
+        .on('error', console.log)
+        .pipe(gulp.dest('./'))
+        .on('error', console.log);
+
+
 });
 
 
@@ -42,6 +43,6 @@ gulp.task('clean', function (cb) {
 });
 
 
-gulp.task('default', ['clean', 'build', 'publish', 'bump']);
+gulp.task('default', ['clean', 'build', 'publish']);
 
 
