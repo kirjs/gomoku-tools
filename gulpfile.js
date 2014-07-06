@@ -8,8 +8,10 @@ var git = require('gulp-git');
 
 
 gulp.task('build', function () {
-    gulp.src('src/index.js')
-        .pipe(browserify())
+    gulp.src('index.js')
+        .pipe(browserify({
+            standalone: 'gomoku-tools'
+        }))
         .pipe(rename('gomoku-tools.js'))
         .pipe(gulp.dest('./build/'))
         .pipe(rename('gomoku-tools.min.js'))
