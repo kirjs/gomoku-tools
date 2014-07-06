@@ -15,8 +15,9 @@ var defaults = {
 };
 
 function Game(config) {
-    this.config = _defaults({}, config, defaults);
-    this.strategy = new strategies[this.config.strategy](this.config);
+    config = _defaults({}, config, defaults);
+    this.strategy = new strategies[config.strategy](config);
+    this.config = this.strategy.config;
     this.moves = [];
     this.position = emptyPosition(this.strategy.config.cellsX, this.strategy.config.cellsY);
     this.move = 1;
@@ -38,7 +39,7 @@ Game.prototype = {
     moveTo: function () {
         Array.prototype.map.call(arguments, function (cell) {
             this.moves.push(cell);
-            if( typeof cell === 'string'){
+            if (typeof cell === 'string') {
                 cell = this.strategy.fromXY(cell);
             }
             this.position[cell[0]][cell[1]] = this.getNextMove();
