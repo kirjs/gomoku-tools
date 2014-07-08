@@ -380,8 +380,8 @@ Game.prototype = {
             if (typeof point === 'string') {
                 point = this.strategy.toPoint(point);
             }
-            this.history.push(point);
             if (!this.has(point)) {
+                this.history.push(point);
                 this.updatePoint(point[0], point[1], this.getNextMove());
             }
         }, this);
