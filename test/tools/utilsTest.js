@@ -31,3 +31,7 @@ exports.testStringify = function (test) {
     ]));
     return test.done();
 };
+exports.testEmptyPosition = function (test) {
+    test.deepEqual([[0,0,0],[0,0,0],[0,0,0]], utils.generateEmptyPosition(3,3));
+    return test.done();
+};
