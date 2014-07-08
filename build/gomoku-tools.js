@@ -369,41 +369,46 @@ Game.prototype = {
         this.position = utils.clonePosition(position);
     },
     /**
-     * Takes one or multiple board cells.
+     * Takes one or multiple board points.
      * Each of them can be represented as a string, e.g. 'h8', or as an array with x and y, e.g. [7,7]
      *
      * @returns {Game} for chaining
      */
     moveTo: function () {
         this.undoHistory = [];
-        Array.prototype.map.call(arguments, function (cell) {
-            if (typeof cell === 'string') {
-                cell = this.strategy.fromXY(cell);
+        Array.prototype.map.call(arguments, function (point) {
+            if (typeof point === 'string') {
+                point = this.strategy.toPoint(point);
             }
-            this.history.push(cell);
-            this.updateCell(cell[0], cell[1], this.getNextMove());
+            this.history.push(point);
+            if (!this.has(point)) {
+                this.updatePoint(point[0], point[1], this.getNextMove());
+            }
         }, this);
         return this;
     },
-
+    has: function (point) {
+        point = this.strategy.toPoint(point);
+        return this.position[point[0]][point[1]] !== 0;
+    },
 
     forward: function () {
         if (this.undoHistory.length) {
-            var cell = this.undoHistory.pop();
-            this.history.push(cell);
-            this.updateCell(cell[0], cell[1], this.getNextMove());
+            var point = this.undoHistory.pop();
+            this.history.push(point);
+            this.updatePoint(point[0], point[1], this.getNextMove());
         }
     },
     back: function () {
         if (this.history.length) {
             this.getPreviousMove();
-            var cell = this.history.pop();
-            this.undoHistory.push(cell);
-            this.updateCell(cell[0], cell[1], 0);
+            var point = this.history.pop();
+            this.undoHistory.push(point);
+            this.updatePoint(point[0], point[1], 0);
         }
     },
 
-    updateCell: function (x, y, value) {
+    updatePoint: function (x, y, value) {
         this.position[x][y] = value;
     },
 
@@ -508,7 +513,10 @@ function Mnk() {
  * @param point string e.g. H8
  * @returns Array(Number) e.g. [7,7]
  */
-Mnk.prototype.fromXY = function (point) {
+Mnk.prototype.toPoint = function (point) {
+    if (typeof point !== 'string') {
+        return point;
+    }
     var x = point.toUpperCase().charCodeAt(0) - 65;
     var y = this.config.cellsY - point.substr(1);
     return [ y, x];
@@ -520,6 +528,9 @@ Mnk.prototype.fromXY = function (point) {
  * @returns string e.g. H8
  */
 Mnk.prototype.toXY = function (xy) {
+    if (typeof xy === 'string') {
+        return xy;
+    }
     var number = this.config.cellsY - xy[0];
     var letter = String.fromCharCode(65 + xy[1]);
     return letter + number;
