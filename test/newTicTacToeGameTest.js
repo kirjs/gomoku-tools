@@ -198,4 +198,54 @@ exports.testMakingAMoveShouldClearUndoHistory = function (test) {
 
     test.done();
 };
+exports.testMakingAMoveShouldClearUndoHistory = function (test) {
+    var game = new Game({
+        strategy: 'ticTacToe'
+    });
+    game.moveTo('b2');
+    game.moveTo('a1');
+    game.back();
+    game.moveTo('a2');
+    game.forward();
+    test.deepEqual(game.getPosition(), [
+        [0, 0, 0],
+        [2, 1, 0],
+        [0, 0, 0]
+    ]);
+
+    test.done();
+};
+
+
+exports.testGetHistory = function (test) {
+    var game = new Game({
+        strategy: 'ticTacToe'
+    });
+    game.moveTo('b2');
+    game.moveTo('a1');
+    game.moveTo('a2');
+
+    test.deepEqual(game.getHistory(), ['B2', 'A1', 'A2']);
+    test.done();
+};
+
+exports.applyingHistory = function (test) {
+    var game = new Game({
+        strategy: 'ticTacToe'
+    });
+    var game2 = new Game({
+        strategy: 'ticTacToe'
+    });
+    game.moveTo('b2');
+    game.moveTo('a1');
+    game.moveTo('a2');
+
+    var position = game.getPosition();
+
+    game2.moveTo.apply(game2, game.getHistory());
+    test.deepEqual(game2.getPosition(), position);
+    test.done();
+};
+
+
 

@@ -25,6 +25,15 @@ function Game(config) {
     this.applyFunctions();
 }
 Game.prototype = {
+    /**
+     * Get game position
+     *
+     * @returns Array[Array]
+     *  e.g.
+     *  [[1,0,2],
+     *   [0,2,0],
+     *   [1,0,0]]
+     */
     getPosition: function () {
         return utils.clonePosition(this.position);
     },
@@ -68,6 +77,15 @@ Game.prototype = {
 
     updateCell: function (x, y, value) {
         this.position[x][y] = value;
+    },
+
+    /**
+     * Returns an array of game moves
+     *
+     * @returns Array[String] e.g. ["H8","H9","I8"]
+     */
+    getHistory: function () {
+        return this.history.map(this.strategy.toXY.bind(this.strategy));
     },
 
     /**
