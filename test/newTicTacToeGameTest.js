@@ -1,24 +1,32 @@
 var Game = require('../src/index.js');
 var utils = require('../src/tools/utils.js');
+var game;
 
-exports.testAddingMoves = function (test) {
-    var game = new Game({
+exports.setUp = function (done) {
+    game = new Game({
         strategy: 'ticTacToe'
     });
-
-    test.deepEqual(game.getPosition(), [
+    done();
+};
+var positions = {
+    empty: [
         [0, 0, 0],
         [0, 0, 0],
         [0, 0, 0]
-    ]);
-
-    game.moveTo([1, 1]);
-
-    test.deepEqual(game.getPosition(), [
+    ],
+    firstCenter: [
         [0, 0, 0],
         [0, 1, 0],
         [0, 0, 0]
-    ]);
+    ]
+};
+
+exports.testAddingMoves = function (test) {
+    test.deepEqual(game.getPosition(), positions.empty);
+
+    game.moveTo([1, 1]);
+
+    test.deepEqual(game.getPosition(), positions.firstCenter);
 
 
     game.moveTo('a1');
@@ -58,9 +66,6 @@ exports.testAddingMoves = function (test) {
 };
 
 exports.testAddingMultipleMoves = function (test) {
-    var game = new Game({
-        strategy: 'ticTacToe'
-    });
     game.moveTo('b2', 'a1', 'a3', 'c1', 'b1');
     test.deepEqual(game.getPosition(), [
         [1, 0, 0],
@@ -71,9 +76,6 @@ exports.testAddingMultipleMoves = function (test) {
 };
 
 exports.testMutatingPositionDoesNotAffectTheGame = function (test) {
-    var game = new Game({
-        strategy: 'ticTacToe'
-    });
     game.moveTo('b2', 'a1', 'a3', 'c1', 'b1');
     var original = utils.clonePosition(game.getPosition());
     var position = game.getPosition();
@@ -88,18 +90,12 @@ exports.testMutatingPositionDoesNotAffectTheGame = function (test) {
 
 exports.testSetPosition = function (test) {
     var position = (new Game({strategy: 'ticTacToe'})).moveTo('b2', 'a1', 'a3', 'c1', 'b1').getPosition();
-    var game = new Game({
-        strategy: 'ticTacToe'
-    });
     game.setPosition(position);
     test.deepEqual(position, game.getPosition());
     test.done();
 };
 
 exports.cloningAGame = function (test) {
-    var game = new Game({
-        strategy: 'ticTacToe'
-    });
     game.moveTo('b2', 'a1', 'a3', 'c1', 'b1');
     var cloned = game.clone();
     test.deepEqual(game.getPosition(), cloned.getPosition());
@@ -108,9 +104,6 @@ exports.cloningAGame = function (test) {
 
 
 exports.testGoingBackwards = function (test) {
-    var game = new Game({
-        strategy: 'ticTacToe'
-    });
     game.moveTo('b2');
     game.moveTo('a1');
 
@@ -122,34 +115,19 @@ exports.testGoingBackwards = function (test) {
 
     game.back();
 
-    test.deepEqual(game.getPosition(), [
-        [0, 0, 0],
-        [0, 1, 0],
-        [0, 0, 0]
-    ]);
+    test.deepEqual(game.getPosition(), positions.firstCenter);
     game.back();
 
-    test.deepEqual(game.getPosition(), [
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0]
-    ]);
+    test.deepEqual(game.getPosition(), positions.empty);
 
     game.back();
 
-    test.deepEqual(game.getPosition(), [
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0]
-    ]);
+    test.deepEqual(game.getPosition(), positions.empty);
 
     test.done();
 };
 
 exports.testGoingForward = function (test) {
-    var game = new Game({
-        strategy: 'ticTacToe'
-    });
     game.moveTo('b2');
     game.moveTo('a1');
     game.back();
@@ -157,11 +135,7 @@ exports.testGoingForward = function (test) {
     game.back();
     game.forward();
 
-    test.deepEqual(game.getPosition(), [
-        [0, 0, 0],
-        [0, 1, 0],
-        [0, 0, 0]
-    ]);
+    test.deepEqual(game.getPosition(), positions.firstCenter);
 
     game.forward();
 
@@ -182,9 +156,6 @@ exports.testGoingForward = function (test) {
 };
 
 exports.testMakingAMoveShouldClearUndoHistory = function (test) {
-    var game = new Game({
-        strategy: 'ticTacToe'
-    });
     game.moveTo('b2');
     game.moveTo('a1');
     game.back();
@@ -199,9 +170,6 @@ exports.testMakingAMoveShouldClearUndoHistory = function (test) {
     test.done();
 };
 exports.testMakingAMoveShouldClearUndoHistory = function (test) {
-    var game = new Game({
-        strategy: 'ticTacToe'
-    });
     game.moveTo('b2');
     game.moveTo('a1');
     game.back();
@@ -218,9 +186,6 @@ exports.testMakingAMoveShouldClearUndoHistory = function (test) {
 
 
 exports.testGetHistory = function (test) {
-    var game = new Game({
-        strategy: 'ticTacToe'
-    });
     game.moveTo('b2');
     game.moveTo('a1');
     game.moveTo('a2');
@@ -230,9 +195,6 @@ exports.testGetHistory = function (test) {
 };
 
 exports.testApplyingHistory = function (test) {
-    var game = new Game({
-        strategy: 'ticTacToe'
-    });
     var game2 = new Game({
         strategy: 'ticTacToe'
     });
@@ -249,10 +211,6 @@ exports.testApplyingHistory = function (test) {
 
 
 exports.testHas = function (test) {
-    var game = new Game({
-        strategy: 'ticTacToe'
-    });
-
     game.moveTo('b2');
     test.ok(game.has('b2'));
     test.ok(!game.has('b1'));
@@ -262,16 +220,10 @@ exports.testHas = function (test) {
 };
 
 exports.testMovingToACellThatHasSomethingDoesNothing = function (test) {
-    var game = new Game({
-        strategy: 'ticTacToe'
-    });
     game.moveTo('b2');
     game.moveTo('b2');
-    test.deepEqual(game.getPosition(), [
-        [0, 0, 0],
-        [0, 1, 0],
-        [0, 0, 0]
-    ]);
+    test.deepEqual(game.getPosition(), positions.firstCenter);
     test.done();
 };
+
 
