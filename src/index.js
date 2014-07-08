@@ -57,7 +57,10 @@ Game.prototype = {
         }, this);
         return this;
     },
-
+    has: function (point) {
+        point = this.strategy.toPoint(point);
+        return this.position[point[0]][point[1]] !== 0;
+    },
 
     forward: function () {
         if (this.undoHistory.length) {

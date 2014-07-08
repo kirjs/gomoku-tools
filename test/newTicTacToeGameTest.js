@@ -229,7 +229,7 @@ exports.testGetHistory = function (test) {
     test.done();
 };
 
-exports.applyingHistory = function (test) {
+exports.testApplyingHistory = function (test) {
     var game = new Game({
         strategy: 'ticTacToe'
     });
@@ -244,6 +244,20 @@ exports.applyingHistory = function (test) {
 
     game2.moveTo.apply(game2, game.getHistory());
     test.deepEqual(game2.getPosition(), position);
+    test.done();
+};
+
+
+exports.testHas = function (test) {
+    var game = new Game({
+        strategy: 'ticTacToe'
+    });
+
+    game.moveTo('b2');
+    test.ok(game.has('b2'));
+    test.ok(!game.has('b1'));
+    test.ok(game.has([1, 1]));
+    test.ok(!game.has([0, 0]));
     test.done();
 };
 
