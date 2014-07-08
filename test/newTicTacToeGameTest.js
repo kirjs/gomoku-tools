@@ -261,5 +261,17 @@ exports.testHas = function (test) {
     test.done();
 };
 
-
+exports.testMovingToACellThatHasSomethingDoesNothing = function (test) {
+    var game = new Game({
+        strategy: 'ticTacToe'
+    });
+    game.moveTo('b2');
+    game.moveTo('b2');
+    test.deepEqual(game.getPosition(), [
+        [0, 0, 0],
+        [0, 1, 0],
+        [0, 0, 0]
+    ]);
+    test.done();
+};
 

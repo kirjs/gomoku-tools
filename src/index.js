@@ -41,19 +41,21 @@ Game.prototype = {
         this.position = utils.clonePosition(position);
     },
     /**
-     * Takes one or multiple board cells.
+     * Takes one or multiple board points.
      * Each of them can be represented as a string, e.g. 'h8', or as an array with x and y, e.g. [7,7]
      *
      * @returns {Game} for chaining
      */
     moveTo: function () {
         this.undoHistory = [];
-        Array.prototype.map.call(arguments, function (cell) {
-            if (typeof cell === 'string') {
-                cell = this.strategy.toPoint(cell);
+        Array.prototype.map.call(arguments, function (point) {
+            if (typeof point === 'string') {
+                point = this.strategy.toPoint(point);
             }
-            this.history.push(cell);
-            this.updateCell(cell[0], cell[1], this.getNextMove());
+            this.history.push(point);
+            if (!this.has(point)) {
+                this.updatePoint(point[0], point[1], this.getNextMove());
+            }
         }, this);
         return this;
     },
@@ -64,21 +66,21 @@ Game.prototype = {
 
     forward: function () {
         if (this.undoHistory.length) {
-            var cell = this.undoHistory.pop();
-            this.history.push(cell);
-            this.updateCell(cell[0], cell[1], this.getNextMove());
+            var point = this.undoHistory.pop();
+            this.history.push(point);
+            this.updatePoint(point[0], point[1], this.getNextMove());
         }
     },
     back: function () {
         if (this.history.length) {
             this.getPreviousMove();
-            var cell = this.history.pop();
-            this.undoHistory.push(cell);
-            this.updateCell(cell[0], cell[1], 0);
+            var point = this.history.pop();
+            this.undoHistory.push(point);
+            this.updatePoint(point[0], point[1], 0);
         }
     },
 
-    updateCell: function (x, y, value) {
+    updatePoint: function (x, y, value) {
         this.position[x][y] = value;
     },
 
