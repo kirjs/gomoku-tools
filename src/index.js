@@ -4,11 +4,7 @@ var transforms = require('./tools/transforms');
 var normalize = require('./tools/normalize');
 var utils = require('./tools/utils');
 var _defaults = require('lodash.defaults');
-var _range = require('lodash.range');
 
-var emptyPosition = function (x, y) {
-    return _range(y).map(_range.bind(null, 0, x, 0));
-};
 
 var defaults = {
     strategy: 'gomoku'
@@ -37,10 +33,10 @@ Game.prototype = {
     /**
      * Resets the game to the initial state
      */
-    reset: function(){
+    reset: function () {
         this.history = [];
         this.undoHistory = [];
-        this.position = emptyPosition(this.strategy.config.cellsX, this.strategy.config.cellsY);
+        this.position = utils.generateEmptyPosition(this.strategy.config.cellsX, this.strategy.config.cellsY);
         this.move = 1;
     },
     setPosition: function (position) {
