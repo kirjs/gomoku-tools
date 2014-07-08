@@ -50,7 +50,7 @@ Game.prototype = {
         this.undoHistory = [];
         Array.prototype.map.call(arguments, function (cell) {
             if (typeof cell === 'string') {
-                cell = this.strategy.fromXY(cell);
+                cell = this.strategy.toPoint(cell);
             }
             this.history.push(cell);
             this.updateCell(cell[0], cell[1], this.getNextMove());
