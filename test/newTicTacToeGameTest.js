@@ -227,3 +227,12 @@ exports.testMovingToACellThatHasSomethingDoesNothing = function (test) {
 };
 
 
+exports.testResetGame = function (test) {
+    var game = new Game({
+        strategy: 'ticTacToe'
+    });
+    game.moveTo('b2', 'a1', 'a3');
+    game.reset();
+    test.deepEqual(game.getPosition(), positions.empty);
+    test.done();
+};

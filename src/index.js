@@ -18,11 +18,8 @@ function Game(config) {
     config = _defaults({}, config, defaults);
     this.strategy = new strategies[config.strategy](config);
     this.config = this.strategy.config;
-    this.history = [];
-    this.undoHistory = [];
-    this.position = emptyPosition(this.strategy.config.cellsX, this.strategy.config.cellsY);
-    this.move = 1;
     this.applyFunctions();
+    this.reset();
 }
 Game.prototype = {
     /**
@@ -36,6 +33,15 @@ Game.prototype = {
      */
     getPosition: function () {
         return utils.clonePosition(this.position);
+    },
+    /**
+     * Resets the game to the initial state
+     */
+    reset: function(){
+        this.history = [];
+        this.undoHistory = [];
+        this.position = emptyPosition(this.strategy.config.cellsX, this.strategy.config.cellsY);
+        this.move = 1;
     },
     setPosition: function (position) {
         this.position = utils.clonePosition(position);
