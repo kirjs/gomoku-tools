@@ -15,6 +15,7 @@ function Game(config) {
     this.strategy = new strategies[config.strategy](config);
     this.config = this.strategy.config;
     this.applyFunctions();
+    this.position = utils.generateEmptyPosition(this.strategy.config.cellsX, this.strategy.config.cellsY);
     this.reset();
 }
 Game.prototype = {
@@ -36,7 +37,9 @@ Game.prototype = {
     reset: function () {
         this.history = [];
         this.undoHistory = [];
-        this.position = utils.generateEmptyPosition(this.strategy.config.cellsX, this.strategy.config.cellsY);
+
+        utils.emptyPosition(this.position);
+
         this.move = 1;
     },
     setPosition: function (position) {
