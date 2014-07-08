@@ -332,11 +332,7 @@ var transforms = _dereq_('./tools/transforms');
 var normalize = _dereq_('./tools/normalize');
 var utils = _dereq_('./tools/utils');
 var _defaults = _dereq_('lodash.defaults');
-var _range = _dereq_('lodash.range');
 
-var emptyPosition = function (x, y) {
-    return _range(y).map(_range.bind(null, 0, x, 0));
-};
 
 var defaults = {
     strategy: 'gomoku'
@@ -347,6 +343,7 @@ function Game(config) {
     this.strategy = new strategies[config.strategy](config);
     this.config = this.strategy.config;
     this.applyFunctions();
+    this.position = utils.generateEmptyPosition(this.strategy.config.cellsX, this.strategy.config.cellsY);
     this.reset();
 }
 Game.prototype = {
@@ -365,10 +362,12 @@ Game.prototype = {
     /**
      * Resets the game to the initial state
      */
-    reset: function(){
+    reset: function () {
         this.history = [];
         this.undoHistory = [];
-        this.position = emptyPosition(this.strategy.config.cellsX, this.strategy.config.cellsY);
+
+        utils.emptyPosition(this.position);
+
         this.move = 1;
     },
     setPosition: function (position) {
@@ -485,7 +484,7 @@ Game.prototype = {
 
 module.exports = Game;
 
-},{"./strategies":11,"./tools/asciiBoard":14,"./tools/normalize":15,"./tools/transforms":16,"./tools/utils":17,"lodash.defaults":2,"lodash.range":8}],10:[function(_dereq_,module,exports){
+},{"./strategies":11,"./tools/asciiBoard":14,"./tools/normalize":15,"./tools/transforms":16,"./tools/utils":17,"lodash.defaults":2}],10:[function(_dereq_,module,exports){
 var Mnk = _dereq_('./mnk');
 var _defaults = _dereq_('lodash.defaults');
 
@@ -751,19 +750,65 @@ module.exports = {
 };
 
 },{"./utils":17}],17:[function(_dereq_,module,exports){
+var _range = _dereq_('lodash.range');
 var rComma = /,/g;
 module.exports = {
+    /**
+     * Creates a copy of the position
+     * @param position
+     * @returns {Position}
+     */
     clonePosition: function (position) {
         return position.map(function (line) {
             return line.slice();
         });
     },
+    /**
+     * Generate an empty 2d array filled with 0's
+     * @param x width of tho array
+     * @param y height of the array
+     * @returns Array[Array[number]]
+     */
+    generateEmptyPosition: function (x, y) {
+        return _range(y).map(_range.bind(null, 0, x, 0));
+    },
 
+    /**
+     * Take an position and zero it out.
+     *
+     * I am explicitly mutating the incoming array instead of creating a new one.
+     *
+     * The reason for doing that is because the position is used in date binging on some other project.
+     * I am not very happy with this solution and I am going to find a nicer and more generic way to
+     * make the game instance data bindable
+     *
+     * @param position
+     * @returns {*}
+     */
+    emptyPosition: function (position) {
+        return position.reduce(function (position, line, x) {
+            return line.reduce(function (position, point, y) {
+                position[x][y] = 0;
+                return position;
+            }, position);
+        }, position);
+    },
+
+    /**
+     * Turns position into string.
+     *
+     * @param position e.g.
+     *  [[0,0,0]
+     *  ,[0,1,0]
+     *  ,[0,0,0]]
+     *
+     * @returns string, e.g. 0000100000
+     */
     stringify: function (position) {
         return position.join('').replace(rComma, '');
     }
 };
 
-},{}]},{},[1])
+},{"lodash.range":8}]},{},[1])
 (1)
 });
