@@ -353,6 +353,15 @@ function Game(config) {
     this.applyFunctions();
 }
 Game.prototype = {
+    /**
+     * Get game position
+     *
+     * @returns Array[Array]
+     *  e.g.
+     *  [[1,0,2],
+     *   [0,2,0],
+     *   [1,0,0]]
+     */
     getPosition: function () {
         return utils.clonePosition(this.position);
     },
@@ -396,6 +405,15 @@ Game.prototype = {
 
     updateCell: function (x, y, value) {
         this.position[x][y] = value;
+    },
+
+    /**
+     * Returns an array of game moves
+     *
+     * @returns Array[String] e.g. ["H8","H9","I8"]
+     */
+    getHistory: function () {
+        return this.history.map(this.strategy.toXY.bind(this.strategy));
     },
 
     /**
@@ -486,13 +504,29 @@ function Mnk() {
 
 }
 
-Mnk.prototype.fromXY = function (str) {
-    var x = str.toUpperCase().charCodeAt(0) - 65;
-    var y = this.config.cellsY - str.substr(1);
+/**
+ * @param point string e.g. H8
+ * @returns Array(Number) e.g. [7,7]
+ */
+Mnk.prototype.fromXY = function (point) {
+    var x = point.toUpperCase().charCodeAt(0) - 65;
+    var y = this.config.cellsY - point.substr(1);
     return [ y, x];
 };
 
+
+/**
+ * @param xy Array(Number)  e.g. [7,7]
+ * @returns string e.g. H8
+ */
+Mnk.prototype.toXY = function (xy) {
+    var number = this.config.cellsY - xy[0];
+    var letter = String.fromCharCode(65 + xy[1]);
+    return letter + number;
+};
+
 module.exports = Mnk;
+
 },{}],13:[function(_dereq_,module,exports){
 var Mnk = _dereq_('./mnk');
 var _defaults = _dereq_('lodash.defaults');
