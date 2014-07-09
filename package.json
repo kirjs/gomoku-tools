@@ -1,6 +1,6 @@
 {
   "name": "gomoku-tools",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "Tools for handling gomoku games",
   "main": "index.js",
   "scripts": {
