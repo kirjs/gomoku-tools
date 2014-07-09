@@ -236,3 +236,28 @@ exports.testResetGame = function (test) {
     test.deepEqual(game.getPosition(), positions.empty);
     test.done();
 };
+
+exports.testPassingGameSequenceToConstructorAsAFirstArgument = function (test) {
+    var game = new Game(['b2', 'a1', 'a3', 'c1', 'b1'], {
+        strategy: 'ticTacToe'
+    });
+    test.deepEqual(game.getPosition(), [
+        [1, 0, 0],
+        [0, 1, 0],
+        [2, 1, 2]
+    ]);
+    test.done();
+};
+
+exports.testPassingGameSequenceToConstructorAsAConfigurationParameter = function (test) {
+    var game = new Game({
+        moves: ['b2', 'a1', 'a3', 'c1', 'b1'],
+        strategy: 'ticTacToe'
+    });
+    test.deepEqual(game.getPosition(), [
+        [1, 0, 0],
+        [0, 1, 0],
+        [2, 1, 2]
+    ]);
+    test.done();
+};

@@ -10,15 +10,56 @@ var defaults = {
     strategy: 'gomoku'
 };
 
-function Game(config) {
+/**
+ * A game instance can take an array of moves, and a configuration object. Both are optional.
+ * Here we just have some logic to handle that.
+ *
+ * @param moves Array[move] Optional
+ * @param config Object Optional
+ * @returns Object
+ */
+function handleInputs(moves, config) {
+    if (Array.isArray(moves)) {
+        config = config || {};
+        config.moves = moves;
+    } else {
+        config = moves;
+    }
     config = _defaults({}, config, defaults);
+    return config;
+}
+
+/**
+ *
+ * @param moves Array[move] Optional
+ *      This is a shortcut for defining config.moves
+ * @param config Object Optional
+ *
+ * @param config.moves Array[move] default: [], no moves
+ *      A sequence of game moves, e.g. ['H8', 'H7', 'H9'];
+ *
+ * @param config.strategy String default: 'gomoku'
+ *      A game strategy, currently supported: gomoku or ticTacToe
+ *
+ *
+ *
+ * @constructor
+ */
+function Game(moves, config) {
+    config = handleInputs(moves, config);
+
     this.strategy = new strategies[config.strategy](config);
     this.config = this.strategy.config;
     this.applyFunctions();
     this.position = utils.generateEmptyPosition(this.strategy.config.cellsX, this.strategy.config.cellsY);
     this.reset();
+
+    if (config.moves) {
+        this.moveTo.apply(this, config.moves);
+    }
 }
 Game.prototype = {
+
     /**
      * Get game position
      *
