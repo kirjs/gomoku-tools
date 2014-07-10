@@ -1,7 +1,7 @@
 {
     "name": "gomoku-tools",
     "main": "src/gomoku-tools.js",
-    "version": "0.0.18",
+    "version": "0.0.22",
     "homepage": "https://github.com/kirjs/gomoku-tools",
     "authors": [
         "Kirill Cherkashin <kirill@kcherkashin.org>"

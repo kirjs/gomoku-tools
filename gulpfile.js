@@ -19,7 +19,7 @@ gulp.task('build', function () {
         .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('publish',['build', 'bump'], function () {
+gulp.task('publish',['build'], function () {
     gulp.src('./build')
         .pipe(git.add())
         .on('error', console.log)
