@@ -16,7 +16,7 @@ function transform(position, callback) {
         return line.map(function (cell, j) {
             return callback(position, i, j);
         });
-    })
+    });
 }
 
 
