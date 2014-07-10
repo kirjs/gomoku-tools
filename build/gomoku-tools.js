@@ -342,7 +342,7 @@ function Game(config) {
     config = _defaults({}, config, defaults);
     this.strategy = new strategies[config.strategy](config);
     this.config = this.strategy.config;
-    this.applyFunctions();
+    this._applyFunctions();
     this.position = utils.generateEmptyPosition(this.strategy.config.cellsX, this.strategy.config.cellsY);
     this.reset();
 }
@@ -453,7 +453,7 @@ Game.prototype = {
      * I am looking for a better way to do that, as creating a multiple functions for every game instance
      * seems to be pretty expensive
      */
-    applyFunctions: function () {
+    _applyFunctions: function () {
 
         var applyPositionTransform = function (transform) {
             return function () {
