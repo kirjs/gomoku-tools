@@ -24,7 +24,8 @@
   "dependencies": {
     "lodash": "~2.4.1",
     "lodash.defaults": "~2.4.1",
-    "lodash.range": "~2.4.1"
+    "lodash.range": "~2.4.1",
+    "pad": "0.0.5"
   },
   "devDependencies": {
     "nodeunit": "~0.9.0",

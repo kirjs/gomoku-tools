@@ -75,3 +75,20 @@ exports.testDiagonalFromRightTopToLeftBottom = function (test) {
     ]);
     test.done();
 };
+
+exports.testClockwise45 = function (test) {
+    test.deepEqual(transform.clockwise45(this.game.getPosition()), [
+        [ 0, 0, 1, 0, 0 ],
+        [ 0, 0, 1, 0, 0 ],
+        [ 2, 1, 2, 0, 0 ]
+    ]);
+    test.done();
+};
+exports.testCounterClockwise45 = function (test) {
+    test.deepEqual(transform.counterClockwise45(this.game.getPosition()), [
+        [ 1, 0, 0, 0, 0 ],
+        [ 0, 0, 1, 0, 0 ],
+        [ 0, 0, 2, 1, 2 ]
+    ]);
+    test.done();
+};

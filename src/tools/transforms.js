@@ -1,4 +1,5 @@
 var utils = require('./utils');
+var pad = require('pad');
 /**
  * This is a rather naive implementation of board mirroring flipping and rotations.
  *
@@ -50,6 +51,45 @@ module.exports = {
     clockwise: function (position) {
         return transform(position, function (position, i, j) {
             return position[position.length - 1 - j][i];
+        });
+    },
+
+    /**
+     * Rotate the position 45 degrees, pad empty space with 0's
+     * note, that this a quick and naive implementation won't work if one cell takes more than one char, and is
+     * generally not very efficient, has to be rewritten
+     * e.g. 1 0  turns into 0(1 0)
+     *      2 1            (2 1)0
+     *
+     * @param position
+     */
+    clockwise45: function (position) {
+        var shift = position.length;
+        var lineWidth = position[0].length;
+        var totalWidth = shift + lineWidth - 1;
+        return position.map(function (line) {
+            shift--;
+            return pad(pad(shift + lineWidth, line.join(''), '0'), totalWidth, '0').split('');
+
+        });
+    },
+
+    /**
+     * Rotate the position 45 degrees, pad empty space with 0's
+     * note, that this a quick and naive implementation won't work if one cell takes more than one char, and is
+     * generally not very efficient, has to be rewritten
+     * e.g. 1 0  turns into 0(1 0)
+     *      2 1            (2 1)0
+     *
+     * @param position
+     */
+    counterClockwise45: function (position) {
+        var shift = position.length;
+        var lineWidth = position[0].length;
+        var totalWidth = shift + lineWidth - 1;
+        return position.map(function (line) {
+            shift--;
+            return pad(totalWidth, pad(line.join(''), shift + lineWidth, '0'), '0').split('');
         });
     },
 
