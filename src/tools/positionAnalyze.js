@@ -16,6 +16,8 @@ module.exports = {
      */
     isFinished: function (position) {
         return has5stones(position) ||
-        has5stones(transforms.clockwise(position));
+        has5stones(transforms.clockwise(position)) ||
+        has5stones(transforms.clockwise(transforms.clockwise45(position))) ||
+        has5stones(transforms.clockwise(transforms.counterClockwise45(position)));
     }
 };
