@@ -34,13 +34,37 @@ exports.testRotateVertical = function (test) {
     test.done();
 };
 
-exports.testRotateClockwise = function (test) {
-    test.deepEqual(transform.clockwise(this.game.getPosition()), [
-        [2, 0, 1],
-        [1, 1, 0],
-        [2, 0, 0]
-    ]);
-    test.done();
+exports.testRotateClockwise = {
+    testRotateSquarePosition: function (test) {
+        test.deepEqual(transform.clockwise(this.game.getPosition()), [
+            [2, 0, 1],
+            [1, 1, 0],
+            [2, 0, 0]
+        ]);
+        test.done();
+    },
+    testRotateRectangle2x3: function (test) {
+        test.deepEqual(transform.clockwise([
+            [1, 2, 3],
+            [4, 5, 6]
+        ]), [
+            [4, 1],
+            [5, 2],
+            [6, 3]
+        ]);
+        test.done();
+    },
+    testRotateRectangle3x2: function (test) {
+        test.deepEqual(transform.clockwise([
+            [1, 2],
+            [3, 4],
+            [5, 6]
+        ]), [
+            [5, 3, 1],
+            [6, 4, 2]
+        ]);
+        test.done();
+    }
 };
 
 exports.testRotateCounterClockwise = function (test) {

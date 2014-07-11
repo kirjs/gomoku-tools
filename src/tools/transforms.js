@@ -1,25 +1,45 @@
 var utils = require('./utils');
+var ascii = require('./asciiBoard');
 var pad = require('pad');
 /**
  * This is a rather naive implementation of board mirroring flipping and rotations.
  *
- * At some point I am planning to spend some time making it more performant
+ * At some point I am planning to spend some time making it faster
  * @param array
  * @returns position
  */
-function arrayReverse(array) {
-    return array.reverse();
+
+
+var transforms = {
+    x: function (x) {
+        return x;
+    },
+    y: function (x, y) {
+        return y;
+    },
+    negX: function (x, y, size) {
+        return size - x;
+    },
+    negY: function (x, y, size) {
+        return size - y;
+    }
+};
+
+function transform(position, transformX, transformY) {
+    var result = [];
+    var verticalSize = position.length - 1;
+    for (var x = 0; x < position.length; x++) {
+        for (var y = 0; y < position[x].length; y++) {
+            var nx = transformX(x, y, verticalSize);
+            var ny = transformY(x, y, verticalSize);
+            if (!result[nx]) {
+                result[nx] = [];
+            }
+            result[nx][ny] = position[x][y];
+        }
+    }
+    return result;
 }
-
-
-function transform(position, callback) {
-    return position.map(function (line, i) {
-        return line.map(function (cell, j) {
-            return callback(position, i, j);
-        });
-    });
-}
-
 
 module.exports = {
     /**
@@ -29,7 +49,7 @@ module.exports = {
      * @returns position
      */
     horizontal: function (position) {
-        return utils.clonePosition(position).map(arrayReverse);
+        return transform(position, transforms.x, transforms.negY);
     },
 
     /**
@@ -39,7 +59,7 @@ module.exports = {
      * @returns position
      */
     vertical: function (position) {
-        return utils.clonePosition(position).reverse();
+        return transform(position, transforms.negX, transforms.y);
     },
 
     /**
@@ -49,9 +69,7 @@ module.exports = {
      * @returns position
      */
     clockwise: function (position) {
-        return transform(position, function (position, i, j) {
-            return position[position.length - 1 - j][i];
-        });
+        return transform(position, transforms.y, transforms.negX);
     },
 
     /**
@@ -102,9 +120,7 @@ module.exports = {
      * @returns position
      */
     counterClockwise: function (position) {
-        return transform(position, function (position, i, j) {
-            return position[ j][position.length - 1 - i];
-        });
+        return transform(position, transforms.negY, transforms.x);
     },
 
 
@@ -116,9 +132,7 @@ module.exports = {
      * @returns position
      */
     diagonalFromLeftTopToRightBottom: function (position) {
-        return transform(position, function (position, i, j) {
-            return position[ position.length - 1 - j][position.length - 1 - i];
-        });
+        return transform(position, transforms.negY, transforms.negX);
     },
 
 
@@ -130,9 +144,7 @@ module.exports = {
      * @returns position
      */
     diagonalFromRightTopToLeftBottom: function (position) {
-        return transform(position, function (position, i, j) {
-            return position[j][i];
-        });
+        return transform(position, transforms.y, transforms.x);
     }
 
 };
