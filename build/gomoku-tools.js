@@ -21,7 +21,105 @@ global.gomokuTools = module.exports = {
 };
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./src/index.js":9}],2:[function(_dereq_,module,exports){
+},{"./src/index.js":11}],2:[function(_dereq_,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="npm" -o ./npm/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+
+/** Used for native method references */
+var objectProto = Object.prototype;
+
+/** Used to resolve the internal [[Class]] of values */
+var toString = objectProto.toString;
+
+/** Used to detect if a method is native */
+var reNative = RegExp('^' +
+  String(toString)
+    .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    .replace(/toString| for [^\]]+/g, '.*?') + '$'
+);
+
+/**
+ * Checks if `value` is a native function.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if the `value` is a native function, else `false`.
+ */
+function isNative(value) {
+  return typeof value == 'function' && reNative.test(value);
+}
+
+module.exports = isNative;
+
+},{}],3:[function(_dereq_,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="npm" -o ./npm/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+
+/** Used to determine if values are of the language type Object */
+var objectTypes = {
+  'boolean': false,
+  'function': true,
+  'object': true,
+  'number': false,
+  'string': false,
+  'undefined': false
+};
+
+module.exports = objectTypes;
+
+},{}],4:[function(_dereq_,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="npm" -o ./npm/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var objectTypes = _dereq_('lodash._objecttypes');
+
+/** Used for native method references */
+var objectProto = Object.prototype;
+
+/** Native method shortcuts */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * A fallback implementation of `Object.keys` which produces an array of the
+ * given object's own enumerable property names.
+ *
+ * @private
+ * @type Function
+ * @param {Object} object The object to inspect.
+ * @returns {Array} Returns an array of property names.
+ */
+var shimKeys = function(object) {
+  var index, iterable = object, result = [];
+  if (!iterable) return result;
+  if (!(objectTypes[typeof object])) return result;
+    for (index in iterable) {
+      if (hasOwnProperty.call(iterable, index)) {
+        result.push(index);
+      }
+    }
+  return result
+};
+
+module.exports = shimKeys;
+
+},{"lodash._objecttypes":3}],5:[function(_dereq_,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="npm" -o ./npm/`
@@ -77,143 +175,7 @@ var defaults = function(object, source, guard) {
 
 module.exports = defaults;
 
-},{"lodash._objecttypes":3,"lodash.keys":4}],3:[function(_dereq_,module,exports){
-/**
- * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
- * Build: `lodash modularize modern exports="npm" -o ./npm/`
- * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <http://lodash.com/license>
- */
-
-/** Used to determine if values are of the language type Object */
-var objectTypes = {
-  'boolean': false,
-  'function': true,
-  'object': true,
-  'number': false,
-  'string': false,
-  'undefined': false
-};
-
-module.exports = objectTypes;
-
-},{}],4:[function(_dereq_,module,exports){
-/**
- * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
- * Build: `lodash modularize modern exports="npm" -o ./npm/`
- * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <http://lodash.com/license>
- */
-var isNative = _dereq_('lodash._isnative'),
-    isObject = _dereq_('lodash.isobject'),
-    shimKeys = _dereq_('lodash._shimkeys');
-
-/* Native method shortcuts for methods with the same name as other `lodash` methods */
-var nativeKeys = isNative(nativeKeys = Object.keys) && nativeKeys;
-
-/**
- * Creates an array composed of the own enumerable property names of an object.
- *
- * @static
- * @memberOf _
- * @category Objects
- * @param {Object} object The object to inspect.
- * @returns {Array} Returns an array of property names.
- * @example
- *
- * _.keys({ 'one': 1, 'two': 2, 'three': 3 });
- * // => ['one', 'two', 'three'] (property order is not guaranteed across environments)
- */
-var keys = !nativeKeys ? shimKeys : function(object) {
-  if (!isObject(object)) {
-    return [];
-  }
-  return nativeKeys(object);
-};
-
-module.exports = keys;
-
-},{"lodash._isnative":5,"lodash._shimkeys":6,"lodash.isobject":7}],5:[function(_dereq_,module,exports){
-/**
- * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
- * Build: `lodash modularize modern exports="npm" -o ./npm/`
- * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <http://lodash.com/license>
- */
-
-/** Used for native method references */
-var objectProto = Object.prototype;
-
-/** Used to resolve the internal [[Class]] of values */
-var toString = objectProto.toString;
-
-/** Used to detect if a method is native */
-var reNative = RegExp('^' +
-  String(toString)
-    .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-    .replace(/toString| for [^\]]+/g, '.*?') + '$'
-);
-
-/**
- * Checks if `value` is a native function.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if the `value` is a native function, else `false`.
- */
-function isNative(value) {
-  return typeof value == 'function' && reNative.test(value);
-}
-
-module.exports = isNative;
-
-},{}],6:[function(_dereq_,module,exports){
-/**
- * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
- * Build: `lodash modularize modern exports="npm" -o ./npm/`
- * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <http://lodash.com/license>
- */
-var objectTypes = _dereq_('lodash._objecttypes');
-
-/** Used for native method references */
-var objectProto = Object.prototype;
-
-/** Native method shortcuts */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * A fallback implementation of `Object.keys` which produces an array of the
- * given object's own enumerable property names.
- *
- * @private
- * @type Function
- * @param {Object} object The object to inspect.
- * @returns {Array} Returns an array of property names.
- */
-var shimKeys = function(object) {
-  var index, iterable = object, result = [];
-  if (!iterable) return result;
-  if (!(objectTypes[typeof object])) return result;
-    for (index in iterable) {
-      if (hasOwnProperty.call(iterable, index)) {
-        result.push(index);
-      }
-    }
-  return result
-};
-
-module.exports = shimKeys;
-
-},{"lodash._objecttypes":3}],7:[function(_dereq_,module,exports){
+},{"lodash._objecttypes":3,"lodash.keys":7}],6:[function(_dereq_,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="npm" -o ./npm/`
@@ -254,7 +216,45 @@ function isObject(value) {
 
 module.exports = isObject;
 
-},{"lodash._objecttypes":3}],8:[function(_dereq_,module,exports){
+},{"lodash._objecttypes":3}],7:[function(_dereq_,module,exports){
+/**
+ * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
+ * Build: `lodash modularize modern exports="npm" -o ./npm/`
+ * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <http://lodash.com/license>
+ */
+var isNative = _dereq_('lodash._isnative'),
+    isObject = _dereq_('lodash.isobject'),
+    shimKeys = _dereq_('lodash._shimkeys');
+
+/* Native method shortcuts for methods with the same name as other `lodash` methods */
+var nativeKeys = isNative(nativeKeys = Object.keys) && nativeKeys;
+
+/**
+ * Creates an array composed of the own enumerable property names of an object.
+ *
+ * @static
+ * @memberOf _
+ * @category Objects
+ * @param {Object} object The object to inspect.
+ * @returns {Array} Returns an array of property names.
+ * @example
+ *
+ * _.keys({ 'one': 1, 'two': 2, 'three': 3 });
+ * // => ['one', 'two', 'three'] (property order is not guaranteed across environments)
+ */
+var keys = !nativeKeys ? shimKeys : function(object) {
+  if (!isObject(object)) {
+    return [];
+  }
+  return nativeKeys(object);
+};
+
+module.exports = keys;
+
+},{"lodash._isnative":2,"lodash._shimkeys":4,"lodash.isobject":6}],8:[function(_dereq_,module,exports){
 /**
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
  * Build: `lodash modularize modern exports="npm" -o ./npm/`
@@ -326,6 +326,33 @@ function range(start, end, step) {
 module.exports = range;
 
 },{}],9:[function(_dereq_,module,exports){
+module.exports = _dereq_('./lib/pad')
+
+},{"./lib/pad":10}],10:[function(_dereq_,module,exports){
+// Generated by CoffeeScript 1.7.1
+module.exports = function(string, size, char) {
+  var i, pad, prefix, _i, _ref;
+  if (char == null) {
+    char = ' ';
+  }
+  prefix = typeof string === 'number';
+  if (prefix) {
+    _ref = [string, size], size = _ref[0], string = _ref[1];
+  }
+  string = string.toString();
+  pad = '';
+  size = size - string.length;
+  for (i = _i = 0; 0 <= size ? _i < size : _i > size; i = 0 <= size ? ++_i : --_i) {
+    pad += char;
+  }
+  if (prefix) {
+    return pad + string;
+  } else {
+    return string + pad;
+  }
+};
+
+},{}],11:[function(_dereq_,module,exports){
 var ascii = _dereq_('./tools/asciiBoard');
 var strategies = _dereq_('./strategies');
 var transforms = _dereq_('./tools/transforms');
@@ -386,6 +413,7 @@ function Game(moves, config) {
         this.moveTo.apply(this, config.moves);
     }
 }
+
 Game.prototype = {
 
     /**
@@ -456,6 +484,22 @@ Game.prototype = {
             this.history.push(point);
             this.updatePoint(point[0], point[1], this.getNextMove());
         }
+        return this;
+    },
+
+    /**
+     * Go to the Nth move in history
+     * @returns {Game}
+     */
+    jumpToMove: function (index) {
+        while (index < this.history.length && index > 0) {
+            this.back();
+        }
+
+        while (index > this.history.length) {
+            this.forward();
+        }
+
         return this;
     },
 
@@ -574,7 +618,7 @@ Game.prototype = {
 
 module.exports = Game;
 
-},{"./strategies":11,"./tools/asciiBoard":14,"./tools/normalize":15,"./tools/transforms":16,"./tools/utils":17,"lodash.defaults":2}],10:[function(_dereq_,module,exports){
+},{"./strategies":13,"./tools/asciiBoard":16,"./tools/normalize":17,"./tools/transforms":18,"./tools/utils":19,"lodash.defaults":5}],12:[function(_dereq_,module,exports){
 var Mnk = _dereq_('./mnk');
 var _defaults = _dereq_('lodash.defaults');
 
@@ -592,14 +636,14 @@ Gomoku.prototype.defaults = {
 module.exports = Gomoku;
 
 
-},{"./mnk":12,"lodash.defaults":2}],11:[function(_dereq_,module,exports){
+},{"./mnk":14,"lodash.defaults":5}],13:[function(_dereq_,module,exports){
 module.exports = {
     gomoku: _dereq_('./gomoku'),
     mnk: _dereq_('./mnk'),
     ticTacToe: _dereq_('./ticTacToe')
 };
 
-},{"./gomoku":10,"./mnk":12,"./ticTacToe":13}],12:[function(_dereq_,module,exports){
+},{"./gomoku":12,"./mnk":14,"./ticTacToe":15}],14:[function(_dereq_,module,exports){
 function Mnk() {
 
 }
@@ -633,7 +677,7 @@ Mnk.prototype.toXY = function (xy) {
 
 module.exports = Mnk;
 
-},{}],13:[function(_dereq_,module,exports){
+},{}],15:[function(_dereq_,module,exports){
 var Mnk = _dereq_('./mnk');
 var _defaults = _dereq_('lodash.defaults');
 
@@ -651,7 +695,7 @@ TicTacToe.prototype.defaults = {
 
 module.exports = TicTacToe;
 
-},{"./mnk":12,"lodash.defaults":2}],14:[function(_dereq_,module,exports){
+},{"./mnk":14,"lodash.defaults":5}],16:[function(_dereq_,module,exports){
 function pad2(number) {
     return ( number > 9) ? number : (number + ' ');
 }
@@ -697,7 +741,7 @@ module.exports = function (position) {
     return result;
 };
 
-},{}],15:[function(_dereq_,module,exports){
+},{}],17:[function(_dereq_,module,exports){
 var transforms = _dereq_('./transforms');
 var utils = _dereq_('./utils');
 
@@ -739,28 +783,49 @@ module.exports = {
     }
 };
 
-},{"./transforms":16,"./utils":17}],16:[function(_dereq_,module,exports){
+},{"./transforms":18,"./utils":19}],18:[function(_dereq_,module,exports){
 var utils = _dereq_('./utils');
+var ascii = _dereq_('./asciiBoard');
+var pad = _dereq_('pad');
 /**
  * This is a rather naive implementation of board mirroring flipping and rotations.
  *
- * At some point I am planning to spend some time making it more performant
+ * At some point I am planning to spend some time making it faster
  * @param array
  * @returns position
  */
-function arrayReverse(array) {
-    return array.reverse();
+
+
+var transforms = {
+    x: function (x) {
+        return x;
+    },
+    y: function (x, y) {
+        return y;
+    },
+    negX: function (x, y, size) {
+        return size - x;
+    },
+    negY: function (x, y, size) {
+        return size - y;
+    }
+};
+
+function transform(position, transformX, transformY) {
+    var result = [];
+    var verticalSize = position.length - 1;
+    for (var x = 0; x < position.length; x++) {
+        for (var y = 0; y < position[x].length; y++) {
+            var nx = transformX(x, y, verticalSize);
+            var ny = transformY(x, y, verticalSize);
+            if (!result[nx]) {
+                result[nx] = [];
+            }
+            result[nx][ny] = position[x][y];
+        }
+    }
+    return result;
 }
-
-
-function transform(position, callback) {
-    return position.map(function (line, i) {
-        return line.map(function (cell, j) {
-            return callback(position, i, j);
-        });
-    })
-}
-
 
 module.exports = {
     /**
@@ -770,7 +835,7 @@ module.exports = {
      * @returns position
      */
     horizontal: function (position) {
-        return utils.clonePosition(position).map(arrayReverse);
+        return transform(position, transforms.x, transforms.negY);
     },
 
     /**
@@ -780,7 +845,7 @@ module.exports = {
      * @returns position
      */
     vertical: function (position) {
-        return utils.clonePosition(position).reverse();
+        return transform(position, transforms.negX, transforms.y);
     },
 
     /**
@@ -790,8 +855,45 @@ module.exports = {
      * @returns position
      */
     clockwise: function (position) {
-        return transform(position, function (position, i, j) {
-            return position[position.length - 1 - j][i];
+        return transform(position, transforms.y, transforms.negX);
+    },
+
+    /**
+     * Rotate the position 45 degrees, pad empty space with 0's
+     * note, that this a quick and naive implementation won't work if one cell takes more than one char, and is
+     * generally not very efficient, has to be rewritten
+     * e.g. 1 0  turns into 0(1 0)
+     *      2 1            (2 1)0
+     *
+     * @param position
+     */
+    clockwise45: function (position) {
+        var shift = position.length;
+        var lineWidth = position[0].length;
+        var totalWidth = shift + lineWidth - 1;
+        return position.map(function (line) {
+            shift--;
+            return pad(pad(shift + lineWidth, line.join(''), '0'), totalWidth, '0').split('');
+
+        });
+    },
+
+    /**
+     * Rotate the position 45 degrees, pad empty space with 0's
+     * note, that this a quick and naive implementation won't work if one cell takes more than one char, and is
+     * generally not very efficient, has to be rewritten
+     * e.g. 1 0  turns into 0(1 0)
+     *      2 1            (2 1)0
+     *
+     * @param position
+     */
+    counterClockwise45: function (position) {
+        var shift = position.length;
+        var lineWidth = position[0].length;
+        var totalWidth = shift + lineWidth - 1;
+        return position.map(function (line) {
+            shift--;
+            return pad(totalWidth, pad(line.join(''), shift + lineWidth, '0'), '0').split('');
         });
     },
 
@@ -804,9 +906,7 @@ module.exports = {
      * @returns position
      */
     counterClockwise: function (position) {
-        return transform(position, function (position, i, j) {
-            return position[ j][position.length - 1 - i];
-        });
+        return transform(position, transforms.negY, transforms.x);
     },
 
 
@@ -818,9 +918,7 @@ module.exports = {
      * @returns position
      */
     diagonalFromLeftTopToRightBottom: function (position) {
-        return transform(position, function (position, i, j) {
-            return position[ position.length - 1 - j][position.length - 1 - i];
-        });
+        return transform(position, transforms.negY, transforms.negX);
     },
 
 
@@ -832,14 +930,12 @@ module.exports = {
      * @returns position
      */
     diagonalFromRightTopToLeftBottom: function (position) {
-        return transform(position, function (position, i, j) {
-            return position[j][i];
-        });
+        return transform(position, transforms.y, transforms.x);
     }
 
 };
 
-},{"./utils":17}],17:[function(_dereq_,module,exports){
+},{"./asciiBoard":16,"./utils":19,"pad":9}],19:[function(_dereq_,module,exports){
 var _range = _dereq_('lodash.range');
 var rComma = /,/g;
 module.exports = {

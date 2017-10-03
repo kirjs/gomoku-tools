@@ -58,6 +58,7 @@ function Game(moves, config) {
         this.moveTo.apply(this, config.moves);
     }
 }
+
 Game.prototype = {
 
     /**
@@ -128,6 +129,22 @@ Game.prototype = {
             this.history.push(point);
             this.updatePoint(point[0], point[1], this.getNextMove());
         }
+        return this;
+    },
+
+    /**
+     * Go to the Nth move in history
+     * @returns {Game}
+     */
+    jumpToMove: function (index) {
+        while (index < this.history.length && index > 0) {
+            this.back();
+        }
+
+        while (index > this.history.length) {
+            this.forward();
+        }
+
         return this;
     },
 

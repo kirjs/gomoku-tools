@@ -103,30 +103,6 @@ exports.cloningAGame = function (test) {
 };
 
 
-exports.testGoingBackwards = function (test) {
-    game.moveTo('b2');
-    game.moveTo('a1');
-
-    test.deepEqual(game.getPosition(), [
-        [0, 0, 0],
-        [0, 1, 0],
-        [2, 0, 0]
-    ]);
-
-    game.back();
-
-    test.deepEqual(game.getPosition(), positions.firstCenter);
-    game.back();
-
-    test.deepEqual(game.getPosition(), positions.empty);
-
-    game.back();
-
-    test.deepEqual(game.getPosition(), positions.empty);
-
-    test.done();
-};
-
 exports.testGoingForward = function (test) {
     game.moveTo('b2');
     game.moveTo('a1');
@@ -151,6 +127,46 @@ exports.testGoingForward = function (test) {
         [0, 1, 0],
         [2, 0, 0]
     ]);
+
+    test.done();
+};
+
+exports.testGoingToIndex = function (test) {
+    game.moveTo('b2', 'a1', 'a3', 'c1', 'b1', 'c1');
+
+    game.jumpToMove(1);
+
+    test.deepEqual(game.getPosition(), positions.firstCenter);
+    game.jumpToMove(3);
+
+    test.deepEqual(game.getPosition(), [[1, 0, 0],
+        [0, 1, 0],
+        [2, 0, 0]]);
+
+    test.done();
+};
+
+
+exports.testGoingBackwards = function (test) {
+    game.moveTo('b2');
+    game.moveTo('a1');
+
+    test.deepEqual(game.getPosition(), [
+        [0, 0, 0],
+        [0, 1, 0],
+        [2, 0, 0]
+    ]);
+
+    game.back();
+
+    test.deepEqual(game.getPosition(), positions.firstCenter);
+    game.back();
+
+    test.deepEqual(game.getPosition(), positions.empty);
+
+    game.back();
+
+    test.deepEqual(game.getPosition(), positions.empty);
 
     test.done();
 };
